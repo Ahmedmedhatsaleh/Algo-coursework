@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
+#include <string>
 using namespace std;
 using namespace std::chrono;
 int bubble_sort_count(int arr[], int n) {
@@ -44,12 +45,12 @@ int insertion_sort_count(int arr[], int n) {
             arr[j + 1] = arr[j];
             j--;
         }
-        if (j >= 0) comparisons++; 
+        if (j >= 0) {
+        }
         arr[j + 1] = key;
     }
     return comparisons;
 }
-
 void generate_random_array(int arr[], int n) {
     for (int i = 0; i < n; i++)
         arr[i] = rand() % 1000;
@@ -64,27 +65,21 @@ void generate_reverse_sorted_array(int arr[], int n) {
 }
 void test_comparisons() {
     srand(time(0));
-    cout << left
-         << setw(12) << "Number"
-         << setw(25) << "Array type"
-         << right
-         << setw(25) << "BubbleSort comparison"
-         << setw(30) << "SelectionSort comparison"
-         << setw(30) << "InsertionSort comparison"
-         << setw(30) << "BubbleSort time"
-         << setw(30) << "SelectionSort time"
-         << setw(30) << "InsertionSort time" << endl;
-    cout << string(212, '-') << endl;
+    cout << "Number" << ","
+         << "Array type" << ","
+         << "BubbleSort comparison" << ","
+         << "SelectionSort comparison" << ","
+         << "InsertionSort comparison" << ","
+         << "BubbleSort time" << ","
+         << "SelectionSort time" << ","
+         << "InsertionSort time" << endl;
     for (int n = 1; n <= 30; n++) {
         int arr[1000], temp[1000];
         string types[3] = {"Random", "Sorted", "Reverse"};
-        void (*generators[3])(int[], int) = {
-            generate_random_array,
-            generate_sorted_array,
-            generate_reverse_sorted_array
-        };
+        void (*generators[3])(int[], int) = { generate_random_array, generate_sorted_array, generate_reverse_sorted_array };
         for (int t = 0; t < 3; t++) {
             generators[t](arr, n);
+
             copy(arr, arr + n, temp);
             auto start = high_resolution_clock::now();
             int bComp = bubble_sort_count(temp, n);
@@ -102,21 +97,18 @@ void test_comparisons() {
             int iComp = insertion_sort_count(temp, n);
             end = high_resolution_clock::now();
             double iTime = duration<double>(end - start).count();
-            cout << left
-                 << setw(12) << n
-                 << setw(25) << types[t]
-                 << right
-                 << setw(25) << bComp
-                 << setw(30) << sComp
-                 << setw(30) << iComp
-                 << setw(30) << fixed << setprecision(8) << bTime
-                 << setw(30) << sTime
-                 << setw(30) << iTime
-                 << endl;
+
+            cout << n << ","
+                 << types[t] << ","
+                 << bComp << ","
+                 << sComp << ","
+                 << iComp << ","
+                 << fixed << setprecision(8) << bTime << ","
+                 << fixed << setprecision(8) << sTime << ","
+                 << fixed << setprecision(8) << iTime << endl;
         }
     }
 }
-
 int main() {
     test_comparisons();
     return 0;
