@@ -1,0 +1,24 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+int i = 1;
+void restrictedHanoi(int n, char fromrod, char throughrod, char torod) {
+    if (n == 1) {
+        cout << "number of moves : " << i++ << ",  move disk 1 from " << fromrod << " to " << throughrod << endl;
+        cout << "number of moves : " << i++ << ",  move disk 1 from " << throughrod << " to " << torod << endl;
+        return;
+    }
+    restrictedHanoi(n - 1, fromrod, throughrod, torod);
+    cout << "number of moves : " << i++ << ",  move disk " << n << " from " << fromrod << " to " << throughrod << endl;
+    restrictedHanoi(n - 1, torod, throughrod, fromrod);
+    cout << "number : " << i++ << ",  move disk " << n << " from " << throughrod << " to " << torod << endl;
+    restrictedHanoi(n - 1, fromrod, throughrod, torod);
+}
+int main() {
+    int N;
+    cout << "Number of disks: ";
+    cin >> N;
+    restrictedHanoi(N, 'A', 'B', 'C');
+    cout << "Total number of moves = " << (pow(3, N) - 1) << endl;
+    return 0;
+}
